@@ -9,7 +9,7 @@ function parting() {
 
 echo '
 
-		Create four partitions. 128MB for /boot, 32MB for UEFI ESP, 1024MB swap and the rest goes to /
+		Create four partitions and a GPT part. scheme. 128MB for /boot, 32MB for UEFI ESP, 1024MB swap and the rest goes to /
 
 		ORDER IS IMPORTANT!!
 '
