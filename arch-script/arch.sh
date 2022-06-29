@@ -21,7 +21,7 @@ sleep 2
 
 }
 
-parting || { echo 'parting failed' ; exit 1; }
+parting
 
 
 #Formating the newly created partitions 
@@ -39,7 +39,7 @@ sleep 1
 
 }
 
-format || { echo 'format failed' ; exit 1; } 
+format 
 
 
 #Mounting all the partitions to /mnt
@@ -58,21 +58,21 @@ sleep 1
 
 }
 
-mounting || { echo 'mounting failed' ; exit 1; }
+mounting
 
 #Installing Base System
 function base_install() {
 	exec pacstrap /mnt base linux-zen linux-zen-headers linux-firmware efibootmgr networkmanager fish dash xdg-utils smartmontools wpa_supplicant wireless_tools iwd wget htop openssh vim nano
 }
 
-base_install || { echo 'base install failed' ; exit 1; }
+base_install
 
 #FSTAB
 function fstab_gen() {
 	exec genfstab -U /mnt >> /mnt/etc/fstab
 }
 
-fstab_gen || { echo 'fstab_gen failed' ; exit 1; 
+fstab_gen
 
 #Setting localtime to israel
 #setting locales to ru_RU.UTF-8 UTF-8 
@@ -80,3 +80,5 @@ fstab_gen || { echo 'fstab_gen failed' ; exit 1;
 function chroot_auto() {
 	exec arch-chroot /mnt -c bash -c 'ln -sf /usr/share/zoneinfo/Israel /etc/localtime; hwclock --systohc; echo "ru_RU.UTF-8 UTF-8" >> /etc/local.gen; locale-gen; echo "LANG=en_US.UTF-8" >> /etc/locale.conf; echo "xen-arch" >> /etc/hostname; bootctl install' umount -R /mnt 
 }
+
+chroot_auto
