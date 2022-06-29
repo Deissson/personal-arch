@@ -62,7 +62,7 @@ mounting
 
 #Installing Base System
 function base_install() {
-	pacstrap /mnt base linux-zen linux-zen-headers linux-firmware efibootmgr networkmanager fish dash xdg-utils smartmontools wpa_supplicant wireless_tools iwd wget htop openssh vim nano
+	pacstrap /mnt base linux-zen linux-zen-headers linux-firmware efibootmgr grub networkmanager fish dash xdg-utils smartmontools wpa_supplicant wireless_tools iwd wget htop openssh vim nano
 }
 
 base_install
