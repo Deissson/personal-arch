@@ -14,7 +14,7 @@ echo '
 		ORDER IS IMPORTANT!!
 '
 sleep 2
-exec fdisk /dev/$DISK
+fdisk /dev/$DISK
 sleep 2
 echo 'if you didnt do it right its your fault'
 sleep 2
@@ -29,13 +29,13 @@ parting
 #Formating:
 function format() {
 
-	exec mkfs.ext4 /dev/$DISK'4'
+	mkfs.ext4 /dev/$DISK'4'
 sleep 1
-	exec mkfs.vfat /dev/$DISK'2'
+	mkfs.vfat /dev/$DISK'2'
 sleep 1
-	exec mkfs.vfat /dev/$DISK'1'
+	mkfs.vfat /dev/$DISK'1'
 sleep 1
-	exec mkswap /dev/$DISK'3' && swapon /dev/$DISK'3'
+	mkswap /dev/$DISK'3' && swapon /dev/$DISK'3'
 
 }
 
@@ -46,15 +46,15 @@ format
 #Mount:
 function mounting() {
 
-	exec mount /dev/$DISK'4' /mnt
+	mount /dev/$DISK'4' /mnt
 sleep 1
-	exec mkdir /mnt/boot
+	mkdir /mnt/boot
 sleep 1
-	exec mount /dev/$DISK'1' /mnt/boot
+	mount /dev/$DISK'1' /mnt/boot
 sleep 1
-	exec mkdir /mnt/boot/efi
+	mkdir /mnt/boot/efi
 sleep 1
-	exec mount /dev/$DISK'2' /mnt/boot/efi
+	mount /dev/$DISK'2' /mnt/boot/efi
 
 }
 
@@ -62,14 +62,14 @@ mounting
 
 #Installing Base System
 function base_install() {
-	exec pacstrap /mnt base linux-zen linux-zen-headers linux-firmware efibootmgr networkmanager fish dash xdg-utils smartmontools wpa_supplicant wireless_tools iwd wget htop openssh vim nano
+	pacstrap /mnt base linux-zen linux-zen-headers linux-firmware efibootmgr networkmanager fish dash xdg-utils smartmontools wpa_supplicant wireless_tools iwd wget htop openssh vim nano
 }
 
 base_install
 
 #FSTAB
 function fstab_gen() {
-	exec genfstab -U /mnt >> /mnt/etc/fstab
+	genfstab -U /mnt >> /mnt/etc/fstab
 }
 
 fstab_gen
@@ -78,7 +78,7 @@ fstab_gen
 #setting locales to ru_RU.UTF-8 UTF-8 
 #autochroot
 function chroot_auto() {
-	exec arch-chroot /mnt -c bash -c 'ln -sf /usr/share/zoneinfo/Israel /etc/localtime; hwclock --systohc; echo "ru_RU.UTF-8 UTF-8" >> /etc/local.gen; locale-gen; echo "LANG=en_US.UTF-8" >> /etc/locale.conf; echo "xen-arch" >> /etc/hostname; bootctl install' umount -R /mnt 
+	arch-chroot /mnt -c bash -c 'ln -sf /usr/share/zoneinfo/Israel /etc/localtime; hwclock --systohc; echo "ru_RU.UTF-8 UTF-8" >> /etc/local.gen; locale-gen; echo "LANG=en_US.UTF-8" >> /etc/locale.conf; echo "xen-arch" >> /etc/hostname; bootctl install' umount -R /mnt 
 }
 
 chroot_auto
