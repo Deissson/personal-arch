@@ -78,7 +78,7 @@ fstab_gen
 #setting locales to ru_RU.UTF-8 UTF-8 
 #autochroot
 function chroot_auto() {
-	arch-chroot /mnt -c bash -c 'ln -sf /usr/share/zoneinfo/Israel /etc/localtime; hwclock --systohc; echo "ru_RU.UTF-8 UTF-8" >> /etc/local.gen; locale-gen; echo "LANG=en_US.UTF-8" >> /etc/locale.conf; echo "xen-arch" >> /etc/hostname; bootctl install' umount -R /mnt 
+	arch-chroot /mnt bash -c 'ln -sf /usr/share/zoneinfo/Israel /etc/localtime; hwclock --systohc; echo "ru_RU.UTF-8 UTF-8" >> /etc/local.gen; locale-gen; echo "LANG=en_US.UTF-8" >> /etc/locale.conf; echo "xen-arch" >> /etc/hostname; bootctl install' umount -R /mnt 
 }
 
 chroot_auto
