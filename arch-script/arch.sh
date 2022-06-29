@@ -78,7 +78,7 @@ fstab_gen
 #setting locales to ru_RU.UTF-8 UTF-8 
 #autochroot
 function chroot_auto() {
-	arch-chroot /mnt bash -c 'ln -sf /usr/share/zoneinfo/Israel /etc/localtime; hwclock --systohc; echo "ru_RU.UTF-8 UTF-8" >> /etc/local.gen; locale-gen; echo "LANG=en_US.UTF-8" >> /etc/locale.conf; echo "xen-arch" >> /etc/hostname; grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB' umount -R /mnt 
+	arch-chroot /mnt bash -c 'ln -sf /usr/share/zoneinfo/Israel /etc/localtime; hwclock --systohc; echo "ru_RU.UTF-8 UTF-8" >> /etc/local.gen; locale-gen; echo "LANG=ru_RU.UTF-8" >> /etc/locale.conf; echo "xen-arch" >> /etc/hostname; grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB' umount -R /mnt 
 }
 
 chroot_auto
