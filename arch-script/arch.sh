@@ -127,7 +127,7 @@ add_sudo
 #nvidia dkms nvidia-settings 
 function i3_pkgs() {
 	arch-chroot /mnt bash -c '
-		pacman -S xorg i3status dunst i3blocks dmenu i3-gaps firefox kitty lightdm lightdm-slick-greeter;
+		pacman -S xorg i3status dunst i3blocks dmenu i3-gaps firefox kitty lightdm lightdm-gtk-greeter;
 		systemctl set-default graphical.target
 		systemctl enable lightdm
 	'
