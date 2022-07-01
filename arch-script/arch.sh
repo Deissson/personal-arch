@@ -81,7 +81,7 @@ function chroot_auto() {
 	arch-chroot /mnt bash -c '
 		ln -sf /usr/share/zoneinfo/Israel /etc/localtime; 
 		hwclock --systohc;
-		sed -i s/#ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/g /etc/locale.gen;
+		echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen;
 		locale-gen; 
 		localectl set-locale LANG=ru_RU.UTF-8
 		echo "xen-arch" >> /etc/hostname; 
@@ -116,11 +116,7 @@ usr_chroot
 #you are free to change the editor to another one
 function add_sudo() {
 	arch-chroot /mnt bash -c '
-		cp /etc/sudoers /tmp/sudoers.new;
-		sed -i s/# %wheel      ALL=(ALL:ALL) ALL/%wheel      ALL=(ALL:ALL) ALL/g /tmp/sudoers.new;
-		visudo -c -f /tmp/sudoers.new
-		sudo EDITOR="cp /tmp/sudoers.new" visudo
-		sleep 5
+		EDITOR=nano visudo
 	'
 }
 
@@ -133,7 +129,7 @@ function gui_pkgs() {
 		pacman -S --noconfirm xorg pipewire wireplumber pipewire-alsa pipewire-pulse pipewire-jack i3status dunst i3blocks dmenu i3-gaps firefox kitty lightdm lightdm-gtk-greeter feh xdg-user-dirs;
 		systemctl set-default graphical.target;
 		systemctl enable lightdm;	
-		su xdg-user-dirs-update daniel
+		su - daniel -c "xdg-user-dirs-update"
 	'
 }
 
