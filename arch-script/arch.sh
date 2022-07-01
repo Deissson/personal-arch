@@ -113,11 +113,11 @@ function usr_chroot() {
 usr_chroot
 
 #add Sudo
+#dumb and unautomated solution, ig temp for now
+#you are free to change the editor to another one
 function add_sudo() {
 	arch-chroot /mnt bash -c '
-		mkdir /tmp/sudoers;
-		cp /etc/sudoers /tmp/sudoers-copy/;
-		echo /tmp/sudoers-copy/ >> "%wheel      ALL=(ALL:ALL) ALL"
+		EDITOR=nano visudo	
 	'
 }
 
