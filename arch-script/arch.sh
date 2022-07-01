@@ -82,7 +82,7 @@ function chroot_auto() {
 	arch-chroot /mnt bash -c '
 		ln -sf /usr/share/zoneinfo/Israel /etc/localtime; 
 		hwclock --systohc;
-		echo "ru_RU.UTF-8 UTF-8" >> /etc/local.gen; 
+		echo "ru_RU.UTF-8 UTF-8" > /etc/local.gen; 
 		locale-gen; 
 		echo "LANG=ru_RU.UTF-8" >> /etc/locale.conf; 
 		echo "xen-arch" >> /etc/hostname; 
