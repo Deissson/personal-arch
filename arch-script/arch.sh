@@ -111,7 +111,7 @@ function usr_chroot() {
 		'
 }
 
-pkg_usr
+usr_chroot
 
 #add Sudo
 function add_sudo() {
