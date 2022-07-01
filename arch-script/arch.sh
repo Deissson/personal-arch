@@ -62,8 +62,7 @@ mounting
 
 #Installing Base System
 function base_install() {
-	base_pkgs="base linux-zen linux-zen-headers linux-firmware efibootmgr intel-ucode grub networkmanager fish dash xdg-utils smartmontools wpa_supplicant wireless_tools iwd wget htop openssh vim nano neofetch sudo"
-	pacstrap /mnt "$base_pkgs"
+	pacstrap /mnt base linux-zen linux-zen-headers linux-firmware efibootmgr intel-ucode grub networkmanager fish dash xdg-utils smartmontools wpa_supplicant wireless_tools iwd wget htop openssh vim nano neofetch sudo
 }
 
 base_install
