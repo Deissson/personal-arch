@@ -75,14 +75,13 @@ function fstab_gen() {
 fstab_gen
 
 #Setting localtime to israel
-#setting locales to ru_RU.UTF-8 UTF-8 
 #Your username is daniel, you are free to change it.
 #autochroot
 function chroot_auto() {
 	arch-chroot /mnt bash -c '
 		ln -sf /usr/share/zoneinfo/Israel /etc/localtime; 
 		hwclock --systohc;
-		echo "ru_RU.UTF-8 UTF-8" > /etc/local.gen; 
+		nano /etc/local.gen; 
 		locale-gen; 
 		echo "LANG=ru_RU.UTF-8" >> /etc/locale.conf; 
 		echo "xen-arch" >> /etc/hostname; 
@@ -127,7 +126,7 @@ add_sudo
 #nvidia dkms nvidia-settings 
 function i3_pkgs() {
 	arch-chroot /mnt bash -c '
-		pacman -S xorg i3status dunst i3blocks dmenu i3-gaps firefox kitty lightdm lightdm-gtk-greeter;
+		pacman -S --noconfirm xorg i3status dunst i3blocks dmenu i3-gaps firefox kitty lightdm lightdm-gtk-greeter;
 		systemctl set-default graphical.target
 		systemctl enable lightdm
 	'
