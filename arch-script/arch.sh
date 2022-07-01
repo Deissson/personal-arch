@@ -124,8 +124,13 @@ function add_sudo() {
 add_sudo
 
 #simple i3 install 
+#nvidia dkms nvidia-settings 
 function i3_pkgs() {
 	arch-chroot /mnt bash -c '
-		pacman -S xorg nvidia i3status dunst i3blocks dmenu i3-gaps kitty lightdm lightdm-slick-greeter
+		pacman -S xorg i3status dunst i3blocks dmenu i3-gaps firefox kitty lightdm lightdm-slick-greeter;
+		systemctl set-default graphical.target
+		systemctl enable lightdm
 	'
 }
+
+i3_pkgs
