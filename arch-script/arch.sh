@@ -81,9 +81,9 @@ function chroot_auto() {
 	arch-chroot /mnt bash -c '
 		ln -sf /usr/share/zoneinfo/Israel /etc/localtime; 
 		hwclock --systohc;
-		echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen; 
+		sed -i s/#ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/g /etc/locale.gen;
 		locale-gen; 
-		echo "LANG=ru_RU.UTF-8" >> /etc/locale.conf; 
+		localectl set-locale LANG=ru_RU.UTF-8
 		echo "xen-arch" >> /etc/hostname; 
 		grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB; 
 		grub-mkconfig -o /boot/grub/grub.cfg; 
@@ -105,31 +105,35 @@ function usr_chroot() {
 		echo "
 		Now Set Password for Root account
 		";
-		passwd root 
+		passwd root;
+		cd /home/daniel;
+		su xdg-user-dirs-update daniel
 		'
 }
 
 usr_chroot
 
 #add Sudo
-#dumb and unautomated solution, ig temp for now
 #you are free to change the editor to another one
 function add_sudo() {
 	arch-chroot /mnt bash -c '
-		EDITOR=nano visudo	
+		cp /etc/sudoers /tmp/sudoers.new;
+		sed -i s/# %wheel      ALL=(ALL:ALL) ALL/%wheel      ALL=(ALL:ALL) ALL/g /tmp/sudoers.new;
+		visudo -c -f /tmp/sudoers.new
+		sudo EDITOR="cp /tmp/sudoers.new" visudo
 	'
 }
 
 add_sudo
 
-#simple i3 install 
+#simple gui install 
 #nvidia dkms nvidia-settings 
-function i3_pkgs() {
+function gui_pkgs() {
 	arch-chroot /mnt bash -c '
-		pacman -S --noconfirm xorg i3status dunst i3blocks dmenu i3-gaps firefox kitty lightdm lightdm-gtk-greeter;
-		systemctl set-default graphical.target
-		systemctl enable lightdm
+		pacman -S --noconfirm xorg pipewire wireplumber pipewire-alsa pipewire-pulse pipewire-jack i3status dunst i3blocks dmenu i3-gaps firefox kitty lightdm lightdm-gtk-greeter feh xdg-user-dirs;
+		systemctl set-default graphical.target;
+		systemctl enable lightdm;	
 	'
 }
 
-i3_pkgs
+gui_pkgs
