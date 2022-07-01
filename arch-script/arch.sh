@@ -62,7 +62,7 @@ mounting
 
 #Installing Base System
 function base_install() {
-	pacstrap /mnt base linux-zen linux-zen-headers linux-firmware efibootmgr grub networkmanager fish dash xdg-utils smartmontools wpa_supplicant wireless_tools iwd wget htop openssh vim nano
+	pacstrap /mnt base linux-zen linux-zen-headers linux-firmware efibootmgr grub networkmanager fish dash xdg-utils smartmontools wpa_supplicant wireless_tools iwd wget htop openssh vim nano neofetch
 }
 
 base_install
@@ -78,7 +78,7 @@ fstab_gen
 #setting locales to ru_RU.UTF-8 UTF-8 
 #autochroot
 function chroot_auto() {
-	arch-chroot /mnt bash -c 'ln -sf /usr/share/zoneinfo/Israel /etc/localtime; hwclock --systohc; echo "ru_RU.UTF-8 UTF-8" >> /etc/local.gen; locale-gen; echo "LANG=ru_RU.UTF-8" >> /etc/locale.conf; echo "xen-arch" >> /etc/hostname; grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB; grub-mkconfig -o /boot/grub/grub.cfg; passwd root' umount -R /mnt 
+	arch-chroot /mnt bash -c 'ln -sf /usr/share/zoneinfo/Israel /etc/localtime; hwclock --systohc; echo "ru_RU.UTF-8 UTF-8" >> /etc/local.gen; locale-gen; echo "LANG=ru_RU.UTF-8" >> /etc/locale.conf; echo "xen-arch" >> /etc/hostname; grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB; grub-mkconfig -o /boot/grub/grub.cfg; systemctl enable NetworkManager;passwd root' umount -R /mnt 
 }
 
 chroot_auto
