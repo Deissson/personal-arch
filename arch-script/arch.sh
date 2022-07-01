@@ -62,7 +62,8 @@ mounting
 
 #Installing Base System
 function base_install() {
-	pacstrap /mnt base linux-zen linux-zen-headers linux-firmware efibootmgr grub networkmanager fish dash xdg-utils smartmontools wpa_supplicant wireless_tools iwd wget htop openssh vim nano neofetch
+	base_pkgs="base linux-zen linux-zen-headers linux-firmware efibootmgr intel-ucode grub networkmanager fish dash xdg-utils smartmontools wpa_supplicant wireless_tools iwd wget htop openssh vim nano neofetch sudo"
+	pacstrap /mnt "$base_pkgs"
 }
 
 base_install
@@ -76,9 +77,56 @@ fstab_gen
 
 #Setting localtime to israel
 #setting locales to ru_RU.UTF-8 UTF-8 
+#Your username is daniel, you are free to change it.
 #autochroot
 function chroot_auto() {
-	arch-chroot /mnt bash -c 'ln -sf /usr/share/zoneinfo/Israel /etc/localtime; hwclock --systohc; echo "ru_RU.UTF-8 UTF-8" >> /etc/local.gen; locale-gen; echo "LANG=ru_RU.UTF-8" >> /etc/locale.conf; echo "xen-arch" >> /etc/hostname; grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB; grub-mkconfig -o /boot/grub/grub.cfg; systemctl enable NetworkManager;passwd root' umount -R /mnt 
+	arch-chroot /mnt bash -c '
+		ln -sf /usr/share/zoneinfo/Israel /etc/localtime; 
+		hwclock --systohc;
+		echo "ru_RU.UTF-8 UTF-8" >> /etc/local.gen; 
+		locale-gen; 
+		echo "LANG=ru_RU.UTF-8" >> /etc/locale.conf; 
+		echo "xen-arch" >> /etc/hostname; 
+		grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB; 
+		grub-mkconfig -o /boot/grub/grub.cfg; 
+		systemctl enable NetworkManager; 
+		' 
+		
 }
 
 chroot_auto
+
+#autochroot usr
+function usr_chroot() {
+	arch-chroot /mnt bash -c ' 
+		useradd -m -G wheel,video,audio,disk -s /bin/fish daniel;
+		echo "
+		Now Set Password for Personal (daniel) account
+		";
+		passwd daniel;
+		echo "
+		Now Set Password for Root account
+		";
+		passwd root 
+		'
+}
+
+pkg_usr
+
+#add Sudo
+function add_sudo() {
+	arch-chroot /mnt bash -c '
+		mkdir /tmp/sudoers;
+		cp /etc/sudoers /tmp/sudoers-copy/;
+		echo /tmp/sudoers-copy/ >> "%wheel      ALL=(ALL:ALL) ALL"
+	'
+}
+
+add_sudo
+
+#simple i3 install 
+function i3_pkgs() {
+	arch-chroot /mnt bash -c '
+		pacman -S xorg nvidia i3status dunst i3blocks dmenu i3-gaps kitty lightdm lightdm-slick-greeter
+	'
+}
