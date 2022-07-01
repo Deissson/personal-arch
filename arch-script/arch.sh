@@ -107,7 +107,6 @@ function usr_chroot() {
 		";
 		passwd root;
 		cd /home/daniel;
-		su xdg-user-dirs-update daniel
 		'
 }
 
@@ -121,6 +120,7 @@ function add_sudo() {
 		sed -i s/# %wheel      ALL=(ALL:ALL) ALL/%wheel      ALL=(ALL:ALL) ALL/g /tmp/sudoers.new;
 		visudo -c -f /tmp/sudoers.new
 		sudo EDITOR="cp /tmp/sudoers.new" visudo
+		sleep 5
 	'
 }
 
@@ -133,6 +133,7 @@ function gui_pkgs() {
 		pacman -S --noconfirm xorg pipewire wireplumber pipewire-alsa pipewire-pulse pipewire-jack i3status dunst i3blocks dmenu i3-gaps firefox kitty lightdm lightdm-gtk-greeter feh xdg-user-dirs;
 		systemctl set-default graphical.target;
 		systemctl enable lightdm;	
+		su xdg-user-dirs-update daniel
 	'
 }
 
