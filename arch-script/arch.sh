@@ -1,6 +1,5 @@
 #!/bin/bash
 
-pacman -Sy git
 
 # vars
 
