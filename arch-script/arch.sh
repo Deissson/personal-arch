@@ -1,5 +1,7 @@
 #!/bin/bash
 
+pacman -Sy git
+
 # vars
 
 DISK=vda #change it to your disk, "lsbk" to list all disks
