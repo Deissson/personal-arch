@@ -84,7 +84,7 @@ function chroot_auto() {
 		hwclock --systohc;
 		echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen;
 		locale-gen; 
-		localectl set-locale LANG=ru_RU.UTF-8
+		echo "LANG=ru_RU.UTF-8" >> /etc/locale.conf;
 		echo "xen-arch" >> /etc/hostname; 
 		grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB; 
 		grub-mkconfig -o /boot/grub/grub.cfg; 
