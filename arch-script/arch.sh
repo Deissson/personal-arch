@@ -138,7 +138,7 @@ function i3_pkgs() {
 
 function kde_pkgs() {
 	arch-chroot /mnt bash -c '
-		pacman -S --noconfirm xorg pipewire wireplumber pipewire-alsa pipewire-pulse pipewire-jack kde sddm kitty firefox base-devel mpv feh xdg-user-dirs;
+		pacman -S --noconfirm xorg pipewire wireplumber pipewire-alsa pipewire-pulse pipewire-jack plasma sddm kitty firefox base-devel mpv feh xdg-user-dirs;
 		systemctl set-default graphical.target;
 		systemctl enable sddm;	
 		su - daniel -c "xdg-user-dirs-update"
