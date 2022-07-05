@@ -125,13 +125,24 @@ add_sudo
 
 #simple gui install 
 #nvidia dkms nvidia-settings 
-function gui_pkgs() {
+function i3_pkgs() {
 	arch-chroot /mnt bash -c '
-		pacman -S --noconfirm xorg pipewire wireplumber pipewire-alsa pipewire-pulse pipewire-jack i3status dunst i3blocks dmenu i3-gaps firefox kitty lightdm lightdm-gtk-greeter feh xdg-user-dirs;
+		pacman -S --noconfirm xorg pipewire wireplumber pipewire-alsa pipewire-pulse pipewire-jack i3status dunst i3blocks dmenu i3-gaps firefox base-devel kitty lightdm lightdm-gtk-greeter feh xdg-user-dirs;
 		systemctl set-default graphical.target;
 		systemctl enable lightdm;	
 		su - daniel -c "xdg-user-dirs-update"
 	'
 }
 
-gui_pkgs
+#i3_pkgs
+
+function kde_pkgs() {
+	arch-chroot /mnt bash -c '
+		pacman -S --noconfirm xorg pipewire wireplumber pipewire-alsa pipewire-pulse pipewire-jack kde kitty firefox base-devel mpv feh xdg-user-dirs;
+		systemctl set-default graphical.target;
+		systemctl enable sddm;	
+		su - daniel -c "xdg-user-dirs-update"
+	'
+}
+
+kde_pkgs
