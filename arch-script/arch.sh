@@ -124,7 +124,7 @@ function add_sudo() {
 add_sudo
 
 #simple gui install 
-#nvidia dkms nvidia-settings 
+#nvidia-dkms nvidia-settings 
 function i3_pkgs() {
 	arch-chroot /mnt bash -c '
 		pacman -S --noconfirm xorg pipewire wireplumber pipewire-alsa pipewire-pulse pipewire-jack i3status dunst i3blocks dmenu i3-gaps firefox base-devel kitty lightdm lightdm-gtk-greeter feh xdg-user-dirs;
