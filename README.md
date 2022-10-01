@@ -1,2 +1,2 @@
 # personal-arch
-the script nor any contents in this repo isn't intended for masses, but you can freely use it, as long as it under the GPL-3.0 license
+if you want to install arch, please use the archwiki or archinstall script, this script is unfinished and was developed for learning purposes
